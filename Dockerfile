@@ -4,8 +4,12 @@
 
 FROM ghcr.io/leejet/stable-diffusion.cpp:master-cuda
 
-# Install SSH server
-RUN apt-get update && apt-get install -y openssh-server \
+# Install SSH server and utilities
+RUN apt-get update && apt-get install -y \
+    openssh-server \
+    joe \
+    wget \
+    aria2 \
     && mkdir /var/run/sshd \
     && sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
@@ -13,6 +17,6 @@ RUN apt-get update && apt-get install -y openssh-server \
 COPY run.sh /run.sh
 RUN chmod +x /run.sh
 
-CMD ["/run.sh"]
+ENTRYPOINT ["/run.sh"]
 
 # EOF Dockerfile
