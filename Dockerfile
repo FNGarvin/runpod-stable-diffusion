@@ -4,6 +4,9 @@
 
 FROM ghcr.io/leejet/stable-diffusion.cpp:master-cuda
 
+# Relax CUDA version requirement to allow running on slightly older drivers if compatible
+ENV NVIDIA_REQUIRE_CUDA "cuda>=12.0"
+
 # Install SSH server and utilities
 RUN apt-get update && apt-get install -y \
     openssh-server \
